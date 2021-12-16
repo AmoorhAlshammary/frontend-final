@@ -7,18 +7,17 @@ export default function Navbar({token,}) {
         {token}
         <ul>
           <li>
-          <Link className="link" to="/courses">courses</Link>
-            
+          <Link className="link" to="/decoration">decoration</Link>
           </li>
           <li>
-          <Link className="link" to="/login">log out</Link>
+          <Link className="link" to="/login">login</Link>
+          </li>
+          <li>
+          <Link className="link" to="/reservation">reservation</Link>
           </li>
           <li>
             <Link className="link" to="/signUp">signUp</Link>
           </li> 
-          <li>
-          <Link className="link" to="/login">login</Link>
-          </li>
         </ul>
         </div>
     );

@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 
-export default function Login() {
+export default function Login({setToken}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   // you can use variable instded of state in this  case
-  const history = useHistory();
+  const history = useHistory(); 
   const changeEmail = (e) => {
     setEmail(e.target.value);
   };
@@ -20,9 +20,14 @@ export default function Login() {
         email: email,
         password: password,
       });
-      history.push("/courses");
+                               
+      
+    // جايه من الريكوست اللي راح لسيرفر
+      localStorage.setItem("token",JSON.stringify(response.data.token))
+      setToken(response.data.token)
+      history.push("/decoration");
     } catch (error) {
-      console.log(error.response.data);
+      // console.log(error.response.data);
     }
   };
   return (
