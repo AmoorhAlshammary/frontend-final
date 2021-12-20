@@ -20,8 +20,7 @@ export default function App() {
 
   // useEffect(() => { 
   //      if (!token) {
-  //         const mytoken = JSON.parse(localStorage.getItem("token"))
-  //         const myuserId = JSON.parse(localStorage.getItem("userId"))
+          
   //         setToken(mytoken)
   //         setUserId(myuserId)
   //      }

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import { set } from "express/lib/application";
 
 export default function Login({setToken}) {
   const [email, setEmail] = useState("");
@@ -20,9 +21,11 @@ export default function Login({setToken}) {
         email: email,
         password: password,
       });
+      console.log( response)
+      setToken(response.data.token);
     if(response.status===200) {
        // جايه من الريكوست اللي راح لسيرفر
-       localStorage.setItem("token",JSON.stringify(response.data.token))
+      //  localStorage.setItem("token",JSON.stringify(response.data.token))
        history.push("/decoration");
     }                          
     } catch (error) {
