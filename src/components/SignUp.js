@@ -6,10 +6,13 @@ export default function SignUp() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [msg, setMsg] = useState("");
   // you can use variable instded of state in this  case
   const history = useHistory();
   const changeName = (e) => {
     setName(e.target.value);
+    // console.log(name)
+  
   };
   const changeEmail = (e) => {
     setEmail(e.target.value);
@@ -25,16 +28,19 @@ export default function SignUp() {
         password: password,
       });
     const response = await axios.post("http://localhost:5000/signUp", {
-      name: name,
-      email: email,
-      password: password,
+      name,
+      email,
+      password,
     });
     if (response.status === 201){
         history.push("/login")
+    }else{
+      setMsg("error")
     }
   };
   return (
     <div className="signup">
+      <p>{msg}</p>
       <input
         onChange={(e) => {
           changeName(e);

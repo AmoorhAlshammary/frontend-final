@@ -20,12 +20,11 @@ export default function Login({setToken}) {
         email: email,
         password: password,
       });
-                               
-      
-    // جايه من الريكوست اللي راح لسيرفر
-      localStorage.setItem("token",JSON.stringify(response.data.token))
-      setToken(response.data.token)
-      history.push("/decoration");
+    if(response.status===200) {
+       // جايه من الريكوست اللي راح لسيرفر
+       localStorage.setItem("token",JSON.stringify(response.data.token))
+       history.push("/decoration");
+    }                          
     } catch (error) {
       // console.log(error.response.data);
     }
