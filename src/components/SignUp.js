@@ -12,7 +12,6 @@ export default function SignUp() {
   const changeName = (e) => {
     setName(e.target.value);
     // console.log(name)
-  
   };
   const changeEmail = (e) => {
     setEmail(e.target.value);

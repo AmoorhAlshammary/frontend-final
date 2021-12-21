@@ -1,25 +1,48 @@
- import React from 'react'
+import React from 'react'
 import { Link } from "react-router-dom";
 
-export default function Navbar({token}) {
-    return (
-      <div>
+import './Navbar.css';
+
+export default function Navbar({ token, setToken }) {
+  return (
+    <div>
+      <nav>
         <ul>
           <li>
-          <Link className="link" to="/decoration">decoration</Link>
+            <Link className="link logo" to="/">Logo</Link>
           </li>
-          <li>
-          <Link className="link" to="/login">login</Link>
-          </li>
-          <li>
-          <Link className="link" to="/reservation">reservation</Link>
-          </li>
-          <li>
-            <Link className="link" to="/signUp">signUp</Link>
-          </li> 
+          <div className='search-container'>
+            <input type="text" className='search-field' placeholder='search ...' />
+          </div>
+
+          { token &&
+            <li>
+              <Link className="link" to="/decoration">Decorations</Link>
+            </li>
+          }
+          { token &&
+            <li>
+              <button className="link"onClick={()=> setToken('')}>Logout</button>
+            </li>
+          }
+
+          { !token && 
+            <li>
+              <div className='signup-btn-container'>
+                <Link className="link" to="/signup">Signup</Link>
+              </div>
+            </li>
+          }
+          { !token &&
+            <li>
+              <Link className="link" to="/login">Login</Link>
+            </li>
+          }
+
         </ul>
-        </div>
-    );
-    
-  }
-    
+      </nav>
+    </div>
+  );
+
+}
+

@@ -1,64 +1,80 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
-export default function Decoration({token ,userId}) {
-    
-//   const history = useHistory()
+export default function Decoration({ token, user }) {
+  //   const history = useHistory()
+  const [data, setData] = useState([]);
 
-  const [data, setData] = useState([])
-  
-  const [name, setName] = useState("")
-  const [description, setDescription] = useState("")
-  const [img, setImg] = useState("")
   useEffect(() => {
     const getData = async () => {
-
-        console.log(token,"kkkkkk");
-        const respone = await axios.get("http://localhost:5000/decoration" , {headers: { authorization: `Bearer ${token}` }})
-        setData(respone.data); 
-        // console.log(respone.data);
+      // console.log(token,"kkkkkk");
+      const response = await axios.get("http://localhost:5000/decoration", { headers: { authorization: `Bearer ${token}` } })
+      setData(response.data);
+      // console.log(respone.data);
     }
     getData();
   }, [])
 
-  const postdecoration = async () => {
-      const respone = await axios.post("http://localhost:5000/decoration" , {
-        name: name , 
-        description: description ,
-        img: img,
+  // const postdecoration = async () => {
+  //   const respone = await axios.post("http://localhost:5000/decoration", {
+  //     name: name,
+  //     description: description,
+  //     img: img,
+  //   },
+  //     { headers: { authorization: `Bearer ${token}` } }
+  //   )
+
+  //   setData(respone.data)
+  // }
+
+  const postReserve = async (decorationId) => {
+    try {
+      console.log(decorationId, user._id)
+      const response = await axios.post("http://localhost:5000/reservation", {
+        decorationId,
+        userId: user._id,
+        date: new Date()
       },
-      {headers: { authorization: `Bearer ${token}` }}
+        { headers: { authorization: `Bearer ${token}` } }
       )
-  
-      setData(respone.data)
+      if(response.status===201){
+        console.log('reservation is done')
+      }
+      
+    } catch (error) {
+      console.log(error)
     }
+  }
 
 
-    return (
-      <div id="container">
+  return (
+    <div id="container">
+      {token && user.isAdmin && <Link to='/decoration/add'>add</Link>}
+      {!data.length && <h1>no data</h1>}
+      {token  && data.map(element => {
+        return (
+          <div key={element._id} className="decoration-container">
+            <div>
+              <div>
+                <h5>{element.name}</h5>
+                <p>{element.description}</p>
+              </div>
 
-    {data && data.map((element , i) => {
-      return <div key = {i} id="decoration-all">
-      <div key ={i} id="decoration">
-      <div id="element">
-      <h5>{element.name}</h5> 
-      <p>{element.description}</p>
-      </div>
+              <img src={element.img} width={200} height={200} alt={element.name} />
+              <button className="button" onClick={() => { postReserve(element._id) }}>RESERVE</button>
 
-      <img id="imgdecoration" src={element.img} width={200}
-            height={200} alt="Javascript"></img>
-      <button className="button" onClick={()=>{postdecoration()}}>ADD</button>
-    
-      </div>
-      <h4>{element.price} S.R</h4> 
-     
-      </div> })}
-      </div>
+            </div>
+            <h4>{element.price} S.R</h4>
 
-    )
-    }
+          </div>
+        )
+      })}
+    </div>
+
+  )
+}
 
 
-    
 
-  
+

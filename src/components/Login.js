@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import { set } from "express/lib/application";
 
-export default function Login({setToken}) {
+export default function Login({setToken, setUser}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   // you can use variable instded of state in this  case
@@ -18,22 +17,23 @@ export default function Login({setToken}) {
   const checkLogin = async () => {
     try {
       const response = await axios.post("http://localhost:5000/login", {
-        email: email,
-        password: password,
+        email,
+        password,
       });
-      console.log( response)
-      setToken(response.data.token);
+      console.log(response.data);// data : token:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiO…yMDF9.BYkEVZv8cZdVUVNDCgv8IRd9r85ex8nDIvJzX2uDdfk';
     if(response.status===200) {
        // جايه من الريكوست اللي راح لسيرفر
       //  localStorage.setItem("token",JSON.stringify(response.data.token))
+       setToken(response.data.token);
+       setUser(response.data.user);
        history.push("/decoration");
-    }                          
+    }                        
     } catch (error) {
-      // console.log(error.response.data);
+      console.log(error.response);
     }
   };
   return (
-    <div className="signup">
+    <div className="login">
       <input
         onChange={(e) => {
           changeEmail(e);
