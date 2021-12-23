@@ -1,19 +1,26 @@
 import React from 'react'
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import './Navbar.css';
 
-export default function Navbar({ token, setToken }) {
+export default function Navbar(props) {
+  const { token, setToken } = props;
+  const history = useHistory();
+  const logout = ()=>{
+    setToken('')
+    history.push('/')
+  }
   return (
     <div>
       <nav>
         <ul>
           <li>
-            <Link className="link logo" to="/">Logo</Link>
+            <Link className="link logo" to="/">AMIRAH D</Link>
           </li>
           <div className='search-container'>
             <input type="text" className='search-field' placeholder='search ...' />
           </div>
+
 
           { token &&
             <li>
@@ -22,7 +29,7 @@ export default function Navbar({ token, setToken }) {
           }
           { token &&
             <li>
-              <button className="link"onClick={()=> setToken('')}>Logout</button>
+              <button className="link"onClick={logout}>Logout</button>
             </li>
           }
 

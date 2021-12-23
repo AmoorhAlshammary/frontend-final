@@ -3,17 +3,17 @@ h2{
   letter-spacing: 4px;
 }
 
-.login{
+.signup{
   height: 80vh;
   width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.input-container-login{
+.input-container-signup{
+  /* margin-top: 100px; */
   height: 50vh;
   width: 50%;
-  margin: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -22,7 +22,7 @@ h2{
   border-radius: 15px;
 }
 
-.input-container-login > input {
+.input-container-signup > input {
   border:1px solid #ccc;
   margin-top: 20px;
   border-radius: 25px;
@@ -30,7 +30,7 @@ h2{
   padding: 10px 20px;
   width: 80%;
 }
-.input-container-login > button {
+.input-container-signup > button {
   border:none;
   margin-top: 20px;
   border-radius: 10px;
@@ -42,15 +42,14 @@ h2{
   font-weight: 600;
   box-shadow: rgba(99, 99, 99, 0.4) 0px 2px 5px 0px;
 }
-.input-container-login > button:hover {
+.input-container-signup > button:hover {
   border-color:rgba(99, 99, 99, 0.2);
   background-color: rgba(99, 99, 99, 0.4);
   color: #fff;
 }
 
-
 @media (max-width: 700px) {
-  .input-container-login{
-    width: 90%;
+  .input-container-signup {
+      width: 90%;
   }
 }

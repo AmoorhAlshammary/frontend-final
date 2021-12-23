@@ -1,80 +1,58 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+
+import './Decoration.css';
 
 export default function Decoration({ token, user }) {
-  //   const history = useHistory()
+  const history = useHistory()
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    const getData = async () => {
-      // console.log(token,"kkkkkk");
+      getData();
+  }, []);
+
+
+  const getData = async () => {
+    // console.log(token,"kkkkkk");
+    if(token){
       const response = await axios.get("http://localhost:5000/decoration", { headers: { authorization: `Bearer ${token}` } })
       setData(response.data);
       // console.log(respone.data);
-    }
-    getData();
-  }, [])
-
-  // const postdecoration = async () => {
-  //   const respone = await axios.post("http://localhost:5000/decoration", {
-  //     name: name,
-  //     description: description,
-  //     img: img,
-  //   },
-  //     { headers: { authorization: `Bearer ${token}` } }
-  //   )
-
-  //   setData(respone.data)
-  // }
-
-  const postReserve = async (decorationId) => {
-    try {
-      console.log(decorationId, user._id)
-      const response = await axios.post("http://localhost:5000/reservation", {
-        decorationId,
-        userId: user._id,
-        date: new Date()
-      },
-        { headers: { authorization: `Bearer ${token}` } }
-      )
-      if(response.status===201){
-        console.log('reservation is done')
-      }
-      
-    } catch (error) {
-      console.log(error)
+    }else{
+      history.push('/login')
     }
   }
 
+ 
+
 
   return (
-    <div id="container">
-      {token && user.isAdmin && <Link to='/decoration/add'>add</Link>}
-      {!data.length && <h1>no data</h1>}
-      {token  && data.map(element => {
-        return (
-          <div key={element._id} className="decoration-container">
-            <div>
-              <div>
-                <h5>{element.name}</h5>
-                <p>{element.description}</p>
-              </div>
-
-              <img src={element.img} width={200} height={200} alt={element.name} />
-              <button className="button" onClick={() => { postReserve(element._id) }}>RESERVE</button>
-
+    <>
+      <div className="top-btn">
+        {token && user.isAdmin && <Link className="add-link" to='/decoration/add'>add</Link>}
+      </div>
+    
+      <div className="decoration-grid" >
+        {!data.length && <h1>no data</h1>}
+        {token  && data.map((element, i) => {
+          return (
+            <div key={element._id} className={["gallery-item", `w-${i%2 ? 4 : 2}`, `h-${i%2 ? 2 : 2}`].join(' ')} >
+              <Link to={`/decoration/${element._id}`} >
+                
+                <div className="image">
+                  <img src={element.img} alt={element.name} />
+                </div>
+                <div className="text">
+                  {element.name}
+                </div>
+              </Link>
             </div>
-            <h4>{element.price} S.R</h4>
-
-          </div>
-        )
-      })}
-    </div>
+          )
+        })}
+      </div>
+    </>
 
   )
 }
-
-
-
 

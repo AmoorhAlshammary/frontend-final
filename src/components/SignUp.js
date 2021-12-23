@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import {useHistory} from "react-router-dom"
+import { useHistory } from "react-router-dom"
 import axios from "axios";
+
+import './Signup.css';
 
 export default function SignUp() {
   const [name, setName] = useState("");
@@ -21,51 +23,54 @@ export default function SignUp() {
   };
 
   const addUser = async () => {
-      console.log({
-        name: name,
-        email: email,
-        password: password,
-      });
+    console.log({
+      name: name,
+      email: email,
+      password: password,
+    });
     const response = await axios.post("http://localhost:5000/signUp", {
       name,
       email,
       password,
     });
-    if (response.status === 201){
-        history.push("/login")
-    }else{
+    if (response.status === 201) {
+      history.push("/login")
+    } else {
       setMsg("error")
     }
   };
   return (
     <div className="signup">
-      <p>{msg}</p>
-      <input
-        onChange={(e) => {
-          changeName(e);
-        }}
-        placeholder="enter your name"
-      />
-      <input
-        onChange={(e) => {
-          changeEmail(e);
-        }}
-        placeholder="enter your email"
-      />
-      <input
-        onChange={(e) => {
-          changePassword(e);
-        }}
-        type="password"
-        placeholder="enter your password"
-      />
-      <button
-        onClick={() => {
-          addUser();
-        }}
-      >
-        sign up
-      </button>
+      <div className="input-container-signup">
+        <p>{msg}</p>
+        <h2>REGISTER</h2>
+        <input
+          onChange={(e) => {
+            changeName(e);
+          }}
+          placeholder="enter your name"
+        />
+        <input
+          onChange={(e) => {
+            changeEmail(e);
+          }}
+          placeholder="enter your email"
+        />
+        <input
+          onChange={(e) => {
+            changePassword(e);
+          }}
+          type="password"
+          placeholder="enter your password"
+        />
+        <button
+          onClick={() => {
+            addUser();
+          }}
+        >
+          Signup
+        </button>
+      </div>
     </div>
   );
 }

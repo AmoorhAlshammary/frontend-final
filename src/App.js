@@ -12,12 +12,19 @@ import AddDecoration from "./components/AddDecoration";
 
 import "bootstrap/dist/css/bootstrap.css"
 import "./App.css"
+import OneDecoration from "./components/OneDecoration";
 
 
 export default function App() {
   const [token, setToken] = useState("");
   const [user, setUser] = useState({});
   const [name, setName] = useState("");
+  const [menuState, setMenuState] = useState(false);
+
+
+  const toggleMenu = ()=> {
+    setMenuState((prevState=>setMenuState(!prevState)))
+  }
 
   // useEffect(() => { 
   //      if (!token) {
@@ -32,7 +39,7 @@ export default function App() {
   return (
     <Router>
       <div className="root-container">
-        <Navbar token={token} setToken={setToken} setName={setName} name={name}></Navbar>
+        <Navbar menuState={menuState} setMenuState={setMenuState} token={token} setToken={setToken} setName={setName} name={name}></Navbar>
         <Switch>
           <Route exact path="/" >
             <Home />
@@ -43,6 +50,9 @@ export default function App() {
           )} />
           <Route exact path="/decoration/add" render={() => (
             <AddDecoration token={token} user={user} />
+          )} />
+          <Route exact path="/decoration/:id" render={(props) => (
+            <OneDecoration token={token} user={user} {...props} />
           )} />
 
           <Route exact path="/login" render={() => (

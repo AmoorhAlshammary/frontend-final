@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 
+import './Login.css'
+
 export default function Login({setToken, setUser}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -34,26 +36,29 @@ export default function Login({setToken, setUser}) {
   };
   return (
     <div className="login">
-      <input
-        onChange={(e) => {
-          changeEmail(e);
-        }}
-        placeholder="enter your email"
-      />
-      <input
-        onChange={(e) => {
-          changePassword(e);
-        }}
-        type="password"
-        placeholder="enter your password"
-      />
-      <button
-        onClick={() => {
-          checkLogin();
-        }}
-      >
-        Login
-      </button>
+      <div className="input-container-login">
+        <h2>LOGIN</h2>
+        <input
+          onChange={(e) => {
+            changeEmail(e);
+          }}
+          placeholder="enter your email"
+        />
+        <input
+          onChange={(e) => {
+            changePassword(e);
+          }}
+          type="password"
+          placeholder="enter your password"
+        />
+        <button
+          onClick={() => {
+            checkLogin();
+          }}
+        >
+          Login
+        </button>
+      </div>
     </div>
   );
 }

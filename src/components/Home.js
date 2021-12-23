@@ -8,8 +8,8 @@ import './Home.css';
 
 export default function Home() {
     const hestory = useHistory()
-    const login=()=>{
-        hestory.push("/login")
+    const goToDecoration=()=>{
+        hestory.push("/decoration")
     }
     return (
         <div>
@@ -18,9 +18,10 @@ export default function Home() {
                 <source src={sample} type="video/ogg" />
                 Your browser does not support the video tag.
             </video>
-            <div className="home">
-               <p>الاميره للديكور </p>
-    
+            <div className="content">
+                <h1>Amirah for Decorations </h1>
+                <p>Lorem ipsum dolor sit amet, an his etiam torquatos. Tollit soleat phaedrum te duo, eum cu recteque expetendis neglegentur. Cu mentitum maiestatis persequeris pro, pri ponderum tractatos ei. Id qui nemore latine molestiae, ad mutat oblique delicatissimi pro.</p>
+                <button id="myBtn" onClick={goToDecoration}> SEE MORE</button>
             </div>
         </div>
     )
