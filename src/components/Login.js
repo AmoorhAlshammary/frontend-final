@@ -22,7 +22,7 @@ export default function Login({setToken, setUser}) {
         email,
         password,
       });
-      console.log(response.data);// data : token:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiO…yMDF9.BYkEVZv8cZdVUVNDCgv8IRd9r85ex8nDIvJzX2uDdfk';
+      console.log(response.data);// data : token:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiO…yMDF9.BYkEVZv8cZdVUVNDCgv8IRd9r85ex8nDIvJzX2uDdfk', user: {};
     if(response.status===200) {
        // جايه من الريكوست اللي راح لسيرفر
       //  localStorage.setItem("token",JSON.stringify(response.data.token))

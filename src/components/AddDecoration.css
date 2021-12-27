@@ -4,15 +4,15 @@ h2{
 }
 
 .add-decoration-container{
-    height: 80vh;
+    padding-top: 100px;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    /* background-color: #999; */
 }
 .input-container{
     /* margin-top: 100px; */
-    height: 90%;
+    height: 500px;
     width: 50vw;
     display: flex;
     flex-direction: column;
@@ -46,4 +46,10 @@ h2{
     border-color:rgba(99, 99, 99, 0.2);
     background-color: rgba(99, 99, 99, 0.4);
     color: #fff;
+}
+
+@media (max-width: 700px) {
+    .input-container {
+        width: 90%;
+    }
 }
