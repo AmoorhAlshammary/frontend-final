@@ -6,7 +6,7 @@ import './Decoration.css';
 
 export default function Reservation({ token, user }) {
   const history = useHistory()
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     const getData = async () => {
@@ -31,9 +31,7 @@ export default function Reservation({ token, user }) {
     <div className="gallery-container">
     
       <div className="decoration-grid" >
-        {!data && <h1>Loading ...</h1>}
-        {data && !data.length && <h1>no data</h1>}
-        {token && data && data.length && data.map((element, i) => {
+        {data.length ? data.map((element, i) => {
           return (
             <div key={element._id} className={"gallery-item h-2"} >
               <Link to={`/decoration/${element._id}`} >
@@ -49,7 +47,10 @@ export default function Reservation({ token, user }) {
               </Link>
             </div>
           )
-        })}
+        })
+        :
+        <h1>NO RESERVATIONS</h1>
+      }
       </div>
     </div>
 

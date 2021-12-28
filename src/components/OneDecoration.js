@@ -1,118 +1,83 @@
 import {useEffect, useState} from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 
 import './OneDecoration.css';
 
-function OneDecoration({match, token, user}) {
-    // console.log(match)
+function OneDecoration({token, user}) {
+    const { id } = useParams();
+    // console.log(id);
+    const [decorationId, setDecorationId] = useState('')
+    const [name, setName] = useState('')
+    const [description, setDescription] = useState('')
+    const [price, setPrice] = useState(0)
+    const [img, setImg] = useState('')
+    const [isReserved, setIsReserved] = useState(false)
     const [reserveStatus, setReserveStatus] = useState(false);
-    const [date, setDate] = useState('');
     const [reservations, setReservations] = useState([]);
-    const [decoration, setDecoration] = useState({id:'',name:'', description:'', img:'', price:0, isReserved: false});
 
     const history = useHistory();
+
     useEffect(()=> {
       const getOneDecoration = async ()=>{
-          if(!token){
+          if(token){
+            // console.log(token,"kkkkkk");
+            const response = await axios.get(`http://localhost:5000/decoration/${id}`, { headers: { authorization: `Bearer ${token}` } });
+            // console.log(response.data);
+            if(response.status===200){
+              const { reservations, oneDecoration } = response.data;
+              setDecorationId(oneDecoration._id);
+              setName(oneDecoration.name);
+              setDescription(oneDecoration.description);
+              setImg(oneDecoration.img);
+              setPrice(oneDecoration.price);
+              setReservations(reservations);
+              setIsReserved(reservations.some(reservation => reservation.decoration === oneDecoration._id));
+            }
+            
+          }else{
             history.push('/login');
-            return;
-          }
-          // console.log(token,"kkkkkk");
-          const response = await axios.get(`http://localhost:5000/decoration/${params.id}`, { headers: { authorization: `Bearer ${token}` } });
-          // console.log(response.data);
-          if(response.status===200){
-            const { reservations, oneDecoration } = response.data;
-            setReservations(reservations);
-            setDecoration({
-              id:oneDecoration._id,
-              name: oneDecoration.name,
-              description: oneDecoration.description,
-              img: oneDecoration.img,
-              price: oneDecoration.price,
-              // isReserved: reservations.some(reservation => reservation.decoration === oneDecoration._id)
-            });
-            // console.log(decoration)
           }
       }
         getOneDecoration();
-    }, [reserveStatus]);
-
-    // useEffect(() => {
-    //   if(decoration.isReserved){
-    //     const reserved = reservations.find(reservation => reservation.decoration === decoration.id)
-    //     const d = new Date(reserved.date);
-    //     const mm = (d.getMonth() < 10) ? "0" + (d.getMonth()+1).toString() : d.getMonth()+1;
-    //     const dd = (d.getDate() < 10) ? "0" + d.getDate().toString() : d.getDate();
-    //     const yy = d.getFullYear();
-    //     setDate(prevState => yy + '-' + mm + '-' + dd)
-    //   }
-    // }, [decoration])
+    },[reserveStatus]);
+     
 
 
 
     const postReserve = async () => {
-      // console.log(decoration._id, user._id)
-      if(date){ 
+      // console.log(decorationId, user._id)
         try {
           const response = await axios.post("http://localhost:5000/reservation", {
-            decorationId: decoration.id,
+            decorationId: decorationId,
             userId: user._id,
-            date: new Date(date)
+            date: new Date()
           },
             { headers: { authorization: `Bearer ${token}` } }
           )
           if(response.status===201){
             // show alert done with reservation
             alert('reservation is done')
-            setReserveStatus(!prevState);
-            // console.log('reservation is done')
+            setReserveStatus(!reserveStatus);
           }
           
         } catch (error) {
           console.log(error)
         }
-      }
     }
 
-    // const updateReservation = async () => {
-    //   // console.log(decoration._id, user._id)
-    //   if(date){ 
-    //     try {
-    //       const response = await axios.put("http://localhost:5000/reservation", {
-    //         reservationId: reservations.find(reservation=> reservation.decoration === decoration.id && reservation.user === user._id)._id,
-    //         decorationId: decoration.id,
-    //         userId: user._id,
-    //         date: new Date(date)
-    //       },
-    //         { headers: { authorization: `Bearer ${token}` } }
-    //       )
-    //       if(response.status===201){
-    //         // show alert done with reservation
-    //         alert(`done updating reservation ${decoration.name}`)
-    //         setReserveStatus(prevState=> (!prevState));
-    //         // console.log('reservation is done')
-    //       }
-          
-    //     } catch (error) {
-    //       console.log(error)
-    //     }
-    //   }
-    // }
-
     const cancelReservation = async () => {
-
+                                                                  //  استخراج ال idالخاص بالحجز
         try {
-          const reservationId = reservations.find(reservation=> reservation.decoration === decoration.id && reservation.user === user._id)._id
+          const reservationId = reservations.find(reservation=> reservation.decoration === decorationId && reservation.user === user._id)._id
           const response = await axios.delete(`http://localhost:5000/reservation/${reservationId}`,
             { headers: { authorization: `Bearer ${token}` } }
           )
           if(response.status===201){
             // show alert done with reservation
-            alert(`done cancelling reservation ${decoration.name}`)
-            setReserveStatus(prevState=> (!prevState));
-            // console.log('reservation is done')
+            alert(`done cancelling reservation for decoration :  ${name}`)
+            setReserveStatus(!reserveStatus);
           }
           
         } catch (error) {
@@ -126,17 +91,17 @@ function OneDecoration({match, token, user}) {
     const updateDecoration = async ()=>{
       try {
         const response = await axios.put('http://localhost:5000/decoration',{
-          id: decoration.id,
-          name: decoration.name,
-          description: decoration.description,
-          img: decoration.img,
-          price: decoration.price
+          id: decorationId,
+          name,
+          description,
+          img,
+          price
         },
         {headers: {authorization: `Bearer ${token}`}}
         )
         if(response.status===201){
           // show alert update done
-          alert(`Decoration : ${decoration.name} updated successfully`)
+          alert(`Decoration : ${name} updated successfully`)
         }
       } catch (error) {
         console.log(error);
@@ -145,7 +110,7 @@ function OneDecoration({match, token, user}) {
 
     const deleteDecoration = async ()=>{
       try {
-        const response = await axios.delete(`http://localhost:5000/decoration/${decoration.id}`,
+        const response = await axios.delete(`http://localhost:5000/decoration/${decorationId}`,
         {headers: {authorization: `Bearer ${token}`}}
         )
         if(response.status===201){
@@ -162,33 +127,32 @@ function OneDecoration({match, token, user}) {
         <div className='decoration-item-container'>
             <div className='decoration-item'>
               <div className='decoration-img'>
-                <img src={decoration.img} alt={decoration.name} />
+                <img src={img} alt={name} />
               </div>
               <div className='decoration-info'>
-                {token && user.isAdmin &&
+                {user.isAdmin ?
                   <>
                     <h3>Update Decoration</h3>
-                    <input type="text" value={decoration.name} placeholder='Decoration Name' onChange={(e)=> setDecoration(prevState => ({...prevState, name: e.target.value}))} />
-                    <input type="text" value={decoration.description} placeholder='Decoration Description' onChange={(e)=> setDecoration(prevState => ({...prevState, description: e.target.value}))} />
-                    <input type="text" value={decoration.img} placeholder='Decoration Image URL' onChange={(e)=> setDecoration(prevState => ({...prevState, img: e.target.value}))} />
-                    <input type="number" value={decoration.price} placeholder='Decoration price' onChange={(e)=> setDecoration(prevState => ({...prevState, price: e.target.value}))} />
-                    <button onClick={updateDecoration}>UPDATE</button>
-                    <button onClick={deleteDecoration}>DELETE</button>
+                    <input type="text" value={name} placeholder='Name' onChange={(e)=> setName(e.target.value)} />
+                    <input type="text" value={description} placeholder='Decoration' onChange={(e)=> setDescription(e.target.value)} />
+                    <input type="text" value={img} placeholder='Image URL' onChange={(e)=> setImg(e.target.value)} />
+                    <input type="number" value={price} placeholder='price' onChange={(e)=> setPrice(e.target.value)} />
+                    <button onClick={()=>updateDecoration()}>UPDATE</button>
+                    <button onClick={()=>deleteDecoration()}>DELETE</button>
                   </>
-                }
-                {token && !user.isAdmin && 
+                  :
                   <>
-                    <h5>Name : {decoration.name} {decoration.isReserved && 'reserved' }</h5>
-                    <p>Description : {decoration.description}</p>
-                    <label>Choose date: </label>
-                    <input type='date' value={date} onChange={(e)=> setDate(prevState => e.target.value)} />
-                    <button onClick={decoration.isReserved ? updateReservation : postReserve}>{decoration.isReserved ? "UPDATE" : "RESERVE"}</button>
-                    {decoration.isReserved &&  <button onClick={ cancelReservation }>CANCEL</button>}
-                    
+                    <h5>Name : {name} {isReserved ? 'reserved' : null }</h5>
+                    <p>Description : {description}</p>
+                    {isReserved ? 
+                      <button onClick={ ()=>cancelReservation() }>CANCEL</button> 
+                      :
+                      <button onClick={ ()=>postReserve() }>RESERVE</button>
+                    }
                   </>
                 }
               </div>
-              </div>
+            </div>
         </div>
     )
 }

@@ -36,13 +36,14 @@
   }
 }
 
-
+/***** Menu Layer *****/
 .menu-container {
   position: fixed;
   top: 70px;
   height: 92vh;
   width: 100vw;
- 
+  /* background: #202934; */
+  /* border: 60px solid #181d23; */
   background: rgb(65, 64, 64);
   border: 60px solid #333;
   display: flex;
@@ -197,10 +198,6 @@
     }
   }
   
-  /* https://css-tricks.com/almanac/properties/a/animation/ فديو */
-/* الحركات حقت المنيو
-https://www.pexels.com/search/videos/interior/ */
-
   .menu-container > .overlay {
     animation: overlay-slide-out 300ms forwards;
   }

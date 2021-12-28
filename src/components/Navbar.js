@@ -12,7 +12,7 @@ export default function Navbar(props) {
     <>
       <nav id="navbar">
         <div className="nav-wrapper">
-          <Link to="/" className="brand">Amirah<strong>Decorations</strong></Link>
+          <Link to="/" className="brand">A<strong>Decorations</strong></Link>
           <div onClick={toggleMenu} className={showMenu ? 'menu-button active' : 'menu-button'}><span />
           </div>
         </div>

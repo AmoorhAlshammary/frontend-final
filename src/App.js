@@ -26,7 +26,7 @@ export default function App() {
 
 
   const toggleMenu = ()=> {
-    setMenuState((prevState=>setMenuState(!prevState)))
+    setMenuState(!menuState);
   }
   
 
@@ -40,37 +40,37 @@ export default function App() {
             <Home />
           </Route>
 
-          <Route exact path="/decoration" render={(props) => (
-            <Decoration token={token} setToken={setToken} user={user} {...props} />
+          <Route exact path="/decoration" render={() => (
+            <Decoration token={token} setToken={setToken} user={user} />
           )} />
-          <Route exact path="/decoration/add" render={(props) => (
-            <AddDecoration token={token} user={user} {...props} />
+          <Route exact path="/decoration/add" render={() => (
+            <AddDecoration token={token} user={user} />
           )} />
-          <Route exact path="/decoration/:id" render={(props) => (
-            <OneDecoration token={token} user={user} {...props} />
-          )} />
+          <Route exact path="/decoration/:id" >
+            <OneDecoration token={token} user={user} />
+          </Route>
 
-          <Route exact path="/login" render={(props) => (
-            <Login setToken={setToken} setUser={setUser} {...props} />
+          <Route exact path="/login" render={() => (
+            <Login setToken={setToken} setUser={setUser} />
           )} />
           <Route exact path="/signup" render={() => (
             <SignUp />
           )} />
 
-          <Route exact path="/reservation/:id" render={(props) => (
-            <Reservation token={token} user={user} {...props} />
+          <Route exact path="/reservation/:id" >
+            <Reservation token={token} user={user} />
+          </Route>
+
+          <Route exact path="/reservation/user/view" render={(props) => ( 
+            <UserReservation token={token} user={user}  props={props} />
           )} />
 
-          <Route exact path="/reservation/user/view" render={(props) => (
-            <UserReservation token={token} user={user} {...props} />
+          <Route exact path="/reservation" render={() => (
+            <Reservation token={token} user={user} />
           )} />
 
-          <Route exact path="/reservation" render={(props) => (
-            <Reservation token={token} user={user} {...props} />
-          )} />
-
-          <Route exact path="/users" render={(props) => (
-            <User token={token} user={user}  />
+          <Route exact path="/users" render={() => (
+            <User token={token} user={user} />
           )} />
 
         </Switch>
@@ -79,3 +79,5 @@ export default function App() {
     </Router>
   )
 }
+
+

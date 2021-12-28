@@ -17,41 +17,59 @@ const Menu = ({token, setToken, showMenu, toggleMenu, user})=> {
       <div className="menu-items">
         <ul>
       
-          { token &&
+          { token ?
             <li onClick={toggleMenu}>
               <Link className="link" to="/decoration">Decorations</Link>
             </li>
+            :
+            null
           }
       
-          { token && !user.isAdmin &&
-            <li onClick={toggleMenu}>
-              <Link className="link" to={`/reservation/user/view`} >Reservations</Link>
-            </li>
+          { token ?
+              user.isAdmin === false ?
+                <li onClick={toggleMenu}>
+                  <Link className="link" to={`/reservation/user/view`} >Reservations</Link>
+                </li>
+              : null
+            : null
           }
 
-        {token && user.isAdmin && <li onClick={toggleMenu}><Link className="link" to='/decoration/add'>Add</Link></li>}
+        { token ? 
+            user.isAdmin ?
+              <li onClick={toggleMenu}><Link className="link" to='/decoration/add'>Add</Link></li>
+            : null
+          : null
+        }
 
-        {token && user.isAdmin && <li onClick={toggleMenu}><Link className="link" to='/users'>Users</Link></li>}
+        { token ? 
+            user.isAdmin ? 
+              <li onClick={toggleMenu}><Link className="link" to='/users'>Users</Link></li>
+            :null
+          :null
+        }
 
-        {token && user.isAdmin && <li onClick={toggleMenu}><Link className="link" to='/reservation'>Reservations</Link></li>}
+        { token ?
+            user.isAdmin ? 
+              <li onClick={toggleMenu}><Link className="link" to='/reservation'>Reservations</Link></li>
+            :null
+          :null
+        }
 
-          { token &&
+          { token ?
             <li onClick={toggleMenu}>
               <button className="link" onClick={logout}>Logout</button>
             </li>
-          }
-
-          { !token && 
-            <li onClick={toggleMenu}>
-              <div className='signup-btn-container'>
-                <Link className="link" to="/signup">Signup</Link>
-              </div>
-            </li>
-          }
-          { !token &&
-            <li onClick={toggleMenu}>
-              <Link className="link" to="/login">Login</Link>
-            </li>
+            :
+            <>
+              <li onClick={toggleMenu}>
+                <div className='signup-btn-container'>
+                  <Link className="link" to="/signup">Signup</Link>
+                </div>
+              </li>
+              <li onClick={toggleMenu}>
+                <Link className="link" to="/login">Login</Link>
+              </li>
+            </>
           }
           
         </ul>

@@ -6,7 +6,7 @@ import './Decoration.css';
 
 export default function UserReservation({ token, user }) {
   const history = useHistory()
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     const getData = async () => {
@@ -35,9 +35,7 @@ export default function UserReservation({ token, user }) {
     <div className="gallery-container">
     
       <div className="decoration-grid" >
-
-        {/* {data && !data.length && <h1>no data</h1>} */}
-        {token && data && data.length && data.map((element, i) => {
+        {data.length ? data.map((element, i) => {
           return (
             <div key={element._id} className={"gallery-item h-2"} >
               <Link to={`/decoration/${element.decoration._id}`} >
@@ -53,7 +51,10 @@ export default function UserReservation({ token, user }) {
               </Link>
             </div>
           )
-        })}
+        })
+      :
+      <h1>No Reservations For You</h1>
+      }
       </div>
     </div>
 
