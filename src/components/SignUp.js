@@ -2,13 +2,11 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom"
 import axios from "axios";
 
-import './Signup.css';
 
 export default function SignUp() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [msg, setMsg] = useState("");
   // you can use variable instded of state in this  case
   const history = useHistory();
   const changeName = (e) => {
@@ -28,49 +26,43 @@ export default function SignUp() {
       email: email,
       password: password,
     });
+    // eslint-disable-next-line
     const response = await axios.post("http://localhost:5000/signUp", {
       name,
       email,
       password,
     });
-    if (response.status === 201) {
-      history.push("/login")
-    } else {
-      setMsg("error")
-    }
+    history.push("/login")
   };
+  // https://getbootstrap.com/docs/5.1/forms/form-control/
   return (
-    <div className="signup">
-      <div className="input-container-signup">
-        <p>{msg}</p>
-        <h2>REGISTER</h2>
-        <input
-          onChange={(e) => {
-            changeName(e);
-          }}
-          placeholder="enter your name"
-        />
-        <input
-          onChange={(e) => {
-            changeEmail(e);
-          }}
-          placeholder="enter your email"
-        />
-        <input
-          onChange={(e) => {
-            changePassword(e);
-          }}
-          type="password"
-          placeholder="enter your password"
-        />
-        <button
+    <div className="container">
+      <h2>SIGNUP</h2>
+      <div className="mb-3 row">
+        <label HTMLFor="name" className="col-sm-2 col-form-label">Name</label>
+        <div className="col-sm-3">
+          <input type="text" onChange={(e)=> {changeName(e);}} className="form-control" autoComplete="off" id="name" placeholder="enter your name" />
+        </div>
+      </div>
+      <div className="mb-3 row">
+        <label HTMLFor="staticEmail" className="col-sm-2 col-form-label">Email</label>
+        <div className="col-sm-3">
+          <input type="email" onChange={(e)=> {changeEmail(e)}} className="form-control" id="staticEmail" placeholder="enter your email" />
+        </div>
+      </div>
+      <div className="mb-3 row">
+        <label HTMLFor="inputPassword" className="col-sm-2 col-form-label">Password</label>
+        <div className="col-sm-3">
+          <input type="password" onChange={(e)=> {changePassword(e)}} className="form-control" id="inputPassword" placeholder="enter password" />
+        </div>
+      </div>
+      <button className="btn btn-primary mb-3"
           onClick={() => {
             addUser();
           }}
         >
-          Signup
-        </button>
-      </div>
+          Sing Up
+      </button>
     </div>
   );
 }

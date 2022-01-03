@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
 
-import './AddDecoration.css'
 
 function AddDecoration({token}) {
     const [name, setName] = useState('')
@@ -27,16 +26,14 @@ function AddDecoration({token}) {
 
     }
     return (
-        <div className='add-decoration-container'>
-          <div className='input-container'>
+          <div className='container mb-2row'>
             <h2>ADD DECORATION</h2>
-            <input type='text' placeholder='name' onChange={(e)=> setName(e.target.value)} />
-            <input type='text' placeholder='description' onChange={(e)=> setDescription(e.target.value)} />
-            <input type='number' placeholder='price' onChange={(e)=> setPrice(e.target.value)} />
-            <input type='text' placeholder='image url' onChange={(e)=> setImg(e.target.value)} />
-            <button onClick={()=> postDecoration()}>ADD</button>
+            <input type='text' className='form-control col-1 mb-2'  placeholder='name' onChange={(e)=> setName(e.target.value)} />
+            <input type='text' className='form-control mb-2' placeholder='description' onChange={(e)=> setDescription(e.target.value)} />
+            <input type='number' className='form-control mb-2' placeholder='price' onChange={(e)=> setPrice(e.target.value)} />
+            <input type='text' className='form-control mb-2' placeholder='image url' onChange={(e)=> setImg(e.target.value)} />
+            <button className='btn btn-primary' onClick={()=> postDecoration()}>ADD</button>
           </div>
-        </div>
     )
 }
 

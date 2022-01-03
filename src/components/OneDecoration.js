@@ -3,52 +3,50 @@ import { useHistory, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 
-import './OneDecoration.css';
-
 function OneDecoration({token, user}) {
     const { id } = useParams();
-    // console.log(id);
+    //console.log(id);
+
     const [decorationId, setDecorationId] = useState('')
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
     const [price, setPrice] = useState(0)
     const [img, setImg] = useState('')
-    const [isReserved, setIsReserved] = useState(false)
-    const [reserveStatus, setReserveStatus] = useState(false);
-    const [reservations, setReservations] = useState([]);
+
+
+    const [reservation, setReservation] = useState(null);
 
     const history = useHistory();
 
     useEffect(()=> {
+      // console.log('use effect')
       const getOneDecoration = async ()=>{
           if(token){
-            // console.log(token,"kkkkkk");
+            // console.log("kkkkkk");
             const response = await axios.get(`http://localhost:5000/decoration/${id}`, { headers: { authorization: `Bearer ${token}` } });
             // console.log(response.data);
-            if(response.status===200){
-              const { reservations, oneDecoration } = response.data;
-              setDecorationId(oneDecoration._id);
-              setName(oneDecoration.name);
-              setDescription(oneDecoration.description);
-              setImg(oneDecoration.img);
-              setPrice(oneDecoration.price);
-              setReservations(reservations);
-              setIsReserved(reservations.some(reservation => reservation.decoration === oneDecoration._id));
-            }
+            setDecorationId(response.data.oneDecoration._id);
+            setName(response.data.oneDecoration.name);
+            setDescription(response.data.oneDecoration.description);
+            setImg(response.data.oneDecoration.img);
+            setPrice(response.data.oneDecoration.price);
+
+            setReservation(response.data.reservation);
             
           }else{
             history.push('/login');
           }
       }
         getOneDecoration();
-    },[reserveStatus]);
-     
+        // eslint-disable-next-line
+    }, []);
 
 
 
     const postReserve = async () => {
       // console.log(decorationId, user._id)
         try {
+          // eslint-disable-next-line
           const response = await axios.post("http://localhost:5000/reservation", {
             decorationId: decorationId,
             userId: user._id,
@@ -56,35 +54,25 @@ function OneDecoration({token, user}) {
           },
             { headers: { authorization: `Bearer ${token}` } }
           )
-          if(response.status===201){
-            // show alert done with reservation
-            alert('reservation is done')
-            setReserveStatus(!reserveStatus);
-          }
-          
+          // console.log(response)
+          history.push(`/reservation/user/view`)
         } catch (error) {
           console.log(error)
         }
     }
 
     const cancelReservation = async () => {
-                                                                  //  استخراج ال idالخاص بالحجز
         try {
-          const reservationId = reservations.find(reservation=> reservation.decoration === decorationId && reservation.user === user._id)._id
-          const response = await axios.delete(`http://localhost:5000/reservation/${reservationId}`,
+          // eslint-disable-next-line
+          const response = await axios.delete(`http://localhost:5000/reservation/${reservation._id}`,
             { headers: { authorization: `Bearer ${token}` } }
           )
-          if(response.status===201){
-            // show alert done with reservation
-            alert(`done cancelling reservation for decoration :  ${name}`)
-            setReserveStatus(!reserveStatus);
-          }
-          
+          // console.log(response)
+          history.push('/decoration')
         } catch (error) {
           console.log(error)
         }
     }
-
 
 
     // admin functions
@@ -107,7 +95,6 @@ function OneDecoration({token, user}) {
         console.log(error);
       }
     }
-
     const deleteDecoration = async ()=>{
       try {
         const response = await axios.delete(`http://localhost:5000/decoration/${decorationId}`,
@@ -124,35 +111,39 @@ function OneDecoration({token, user}) {
     }
 
     return (
-        <div className='decoration-item-container'>
-            <div className='decoration-item'>
-              <div className='decoration-img'>
-                <img src={img} alt={name} />
-              </div>
-              <div className='decoration-info'>
+        <div className='container'>
                 {user.isAdmin ?
-                  <>
-                    <h3>Update Decoration</h3>
-                    <input type="text" value={name} placeholder='Name' onChange={(e)=> setName(e.target.value)} />
-                    <input type="text" value={description} placeholder='Decoration' onChange={(e)=> setDescription(e.target.value)} />
-                    <input type="text" value={img} placeholder='Image URL' onChange={(e)=> setImg(e.target.value)} />
-                    <input type="number" value={price} placeholder='price' onChange={(e)=> setPrice(e.target.value)} />
-                    <button onClick={()=>updateDecoration()}>UPDATE</button>
-                    <button onClick={()=>deleteDecoration()}>DELETE</button>
-                  </>
+                  <div className="card m-2" style={{width: 300}}>
+                    <img src={img} className="card-img-top" alt="" />
+                    <div className="card-body">
+                      <h3>Update Decoration</h3>
+                      <h5 className="card-title">Name: {name}</h5>
+                      <p className="card-text">Description: {description}</p>
+                      <p className="card-text">Price: {price} SR</p>
+                      <input type="text" className="form-control mb-2" placeholder='Name' onChange={(e)=> setName(e.target.value)} />
+                      <input type="text" className="form-control mb-2" placeholder='Decoration' onChange={(e)=> setDescription(e.target.value)} />
+                      <input type="text" className="form-control mb-2" placeholder='Image URL' onChange={(e)=> setImg(e.target.value)} />
+                      <input type="number" className="form-control mb-2" placeholder='price' onChange={(e)=> setPrice(e.target.value)} />
+                      <button className='btn btn-success m-2' onClick={()=>updateDecoration()}>UPDATE</button>
+                      <button className='btn btn-danger' onClick={()=>deleteDecoration()}>DELETE</button>
+                    </div>
+                  </div>
                   :
-                  <>
-                    <h5>Name : {name} {isReserved ? 'reserved' : null }</h5>
-                    <p>Description : {description}</p>
-                    {isReserved ? 
-                      <button onClick={ ()=>cancelReservation() }>CANCEL</button> 
-                      :
-                      <button onClick={ ()=>postReserve() }>RESERVE</button>
-                    }
-                  </>
+                  // https://getbootstrap.com/docs/5.1/components/card/
+                  <div className="card m-2" style={{width: 300}}>
+                    <img src={img} className="card-img-top" alt="" />
+                    <div className="card-body">
+                      <h5 className="card-title">{name}</h5>
+                      <p className="card-text">{description}</p>
+                      <p className="card-text">{price} SR</p>
+                      {reservation ? 
+                        <button className='btn btn-dark' onClick={ ()=>cancelReservation() }>CANCEL</button> 
+                        :
+                        <button className='btn btn-info' onClick={ ()=>postReserve() }>RESERVE</button>
+                      }
+                    </div>
+                  </div>
                 }
-              </div>
-            </div>
         </div>
     )
 }

@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 
-import './Decoration.css';
-
 export default function Decoration({ token, user }) {
   const history = useHistory()
   const [data, setData] = useState([]);
@@ -20,6 +18,7 @@ export default function Decoration({ token, user }) {
       }
     }
     getData();
+    // eslint-disable-next-line
   }, []);
 
 
@@ -28,30 +27,25 @@ export default function Decoration({ token, user }) {
 
 
   return (
-    <div className="gallery-container">
-    
-      <div className="decoration-grid" >
-        {data.length ? data.map((element, i) => {
+    // https://getbootstrap.com/docs/5.1/layout/grid/
+    <div class="container">
+      <div class="row">
+        {data.map((element, i) => {
             return (
-              <div key={element._id} className={"gallery-item h-2"} >
-                <Link to={`/decoration/${element._id}`} >
-                  
-                  <div className="image">
-                    <img src={element.img} alt={element.name} />
+              // https://getbootstrap.com/docs/5.1/components/card/
+                <div key={element._id} className="card m-2" style={{width: 300}}>
+                  <img src={element.img} className="card-img-top" alt="" width="350" height="350"/>
+                  <div className="card-body">
+                    <h5 className="card-title">{element.name}</h5>
+                    <p className="card-text">{element.description}</p>
+                    <Link className="btn btn-primary" to={`/decoration/${element._id}`} >Open</Link>
                   </div>
-                  <div className="text">
-                    {element.name}
-                  </div>
-                </Link>
-              </div>
+                </div>
             )
           })
-          :
-          <h1>NO DECORATIONS</h1>
         }
       </div>
     </div>
-
   )
 }
 
