@@ -109,7 +109,7 @@ function OneDecoration({token, user}) {
         console.log(error);
       }
     }
-
+ 
     return (
         <div className='container'>
                 {user.isAdmin ?

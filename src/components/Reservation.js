@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 
 
-export default function Reservation({ token, user }) {
+export default function Reservation({ token ,user}) {
   const history = useHistory()
   const [data, setData] = useState([]);
 
@@ -38,11 +38,9 @@ export default function Reservation({ token, user }) {
                 // https://getbootstrap.com/docs/5.1/components/card/
                
                   <div key={element._id} className="card m-2" style={{width: 350}}>
-                    <img src={element.decoration.img} className="card-img-top" alt=" "  width="350" height="350" />
+                    <img src={element.decoration.img} className="card-img-top" alt=" " width="350" height="350" />
                     <div className="card-body">
                       <h5 className="card-title">{element.decoration.name}</h5>
-                         
-                      <p className="card-text">{element.user.email}</p>
                       <Link className="btn btn-primary" to={`/decoration/${element.decoration._id}`} >Open</Link>
                 
                     </div>

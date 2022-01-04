@@ -39,10 +39,9 @@ export default function UserReservation({ token, user }) {
               return (
                 // https://getbootstrap.com/docs/5.1/components/card/
                   <div key={element._id} className="card m-2" style={{width: 300}}>
-                    <img src={element.decoration.img} className="card-img-top" alt={element.decoration.name} />
+                    <img src={element.decoration.img} className="card-img-top" alt={element.decoration.name}  width="350" height="350" />
                     <div className="card-body">
                       <h5 className="card-title">{element.decoration.name}</h5>
-                      <p className="card-text">{element.user.email}</p>
                       <Link className="btn btn-primary" to={`/decoration/${element.decoration._id}`} >Open</Link>
                     </div>
                   </div>

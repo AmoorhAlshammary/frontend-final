@@ -5,7 +5,12 @@ import { Link, useHistory } from "react-router-dom";
 export default function Decoration({ token, user }) {
   const history = useHistory()
   const [data, setData] = useState([]);
+  const [search , setsearch] = useState("");
 
+  const newsearch = (e) => {
+    setsearch(e.target.value)
+  }
+  
   useEffect(() => {
     const getData = async () => {
       // console.log(token,"kkkkkk");
@@ -22,14 +27,32 @@ export default function Decoration({ token, user }) {
   }, []);
 
 
-
+  const searchd = ()=> {
+    const searchd= data.filter((element) => {
+      if (element.name.toLowerCase().includes(search.toLocaleLowerCase())) {
+        return element;
+      }
+      console.log(element);
+    });
+    setData(searchd);
+    return searchd;
+  };
  
 
 
   return (
     // https://getbootstrap.com/docs/5.1/layout/grid/
+    
     <div class="container">
       <div class="row">
+    
+      <input placeholder="Search" type="text" className="searchInput w-50 border-0 px-4 py-2" onChange={(e)=> newsearch(e)} />
+      <button className="searchInput w-50 border-0 px-4 py-2"onClick={()=>searchd()}>search</button>     
+
+      {/* <<input type="text" className="searchInput w-50 border-0 px-4 py-2" onChange={(e)=> newsearch(e)} /> */}
+                       
+                    
+           
         {data.map((element, i) => {
             return (
               // https://getbootstrap.com/docs/5.1/components/card/
@@ -44,8 +67,10 @@ export default function Decoration({ token, user }) {
             )
           })
         }
+
       </div>
     </div>
+    
   )
 }
 
