@@ -38,7 +38,6 @@ function OneDecoration({token, user}) {
           }
       }
         getOneDecoration();
-        // eslint-disable-next-line
     }, []);
 
 
@@ -46,7 +45,7 @@ function OneDecoration({token, user}) {
     const postReserve = async () => {
       // console.log(decorationId, user._id)
         try {
-          // eslint-disable-next-line
+      
           const response = await axios.post("http://localhost:5000/reservation", {
             decorationId: decorationId,
             userId: user._id,
@@ -63,7 +62,7 @@ function OneDecoration({token, user}) {
 
     const cancelReservation = async () => {
         try {
-          // eslint-disable-next-line
+  
           const response = await axios.delete(`http://localhost:5000/reservation/${reservation._id}`,
             { headers: { authorization: `Bearer ${token}` } }
           )
