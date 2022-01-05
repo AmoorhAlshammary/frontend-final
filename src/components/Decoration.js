@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
-
+import "./Decoration.css"
 export default function Decoration({ token, user }) {
   const history = useHistory()
   const [data, setData] = useState([]);
@@ -44,14 +44,10 @@ export default function Decoration({ token, user }) {
     // https://getbootstrap.com/docs/5.1/layout/grid/
     
     <div class="container">
-      <div class="row">
-    
-      <input placeholder="Search" type="text" className="searchInput w-50 border-0 px-4 py-2" onChange={(e)=> newsearch(e)} />
-      <button className="searchInput w-50 border-0 px-4 py-2"onClick={()=>searchd()}>search</button>     
+          <div class="row" >
+          <input placeholder="Search" type="text" className=" col-sm-3 width=100px " onChange={(e)=> newsearch(e)} />
+      <button className="searchInput w-50 border-0 px-4 py-2"onClick={()=>searchd()}>search</button>   
 
-      {/* <<input type="text" className="searchInput w-50 border-0 px-4 py-2" onChange={(e)=> newsearch(e)} /> */}
-                       
-                    
            
         {data.map((element, i) => {
             return (
@@ -64,6 +60,7 @@ export default function Decoration({ token, user }) {
                     <Link className="btn btn-primary" to={`/decoration/${element._id}`} >Open</Link>
                   </div>
                 </div>
+              
             )
           })
         }

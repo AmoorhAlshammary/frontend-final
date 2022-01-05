@@ -1,6 +1,5 @@
 import { useHistory } from 'react-router-dom';
 import sample from '../assets/videos/background_video.mp4';
-
 import './Home.css';
 
 
