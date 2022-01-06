@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-
+import './Login.css';
 
 export default function Login({setToken, setUser}) {
   const [email, setEmail] = useState("");
@@ -35,25 +35,25 @@ export default function Login({setToken, setUser}) {
   };
   // https://getbootstrap.com/docs/5.1/forms/form-control/
   return (
-    <div className="container">
+    <div className="container" id="containerlog">
       <h2>LOGIN</h2>
-      <div className="mb-3 row">
+      <div className="mb-3 row" id="containerlo">
         <label HTMLFor="staticEmail" className="col-sm-2 col-form-label">Email</label>
         <div className="col-sm-3">
           <input type="email" onChange={(e)=> {changeEmail(e)}} className="form-control" id="staticEmail" placeholder="enter your email" />
         </div>
       </div>
-      <div className="mb-3 row">
+      <div className="mb-3 row" id="containerl">
         <label HTMLFor="inputPassword" className="col-sm-2 col-form-label">Password</label>
         <div className="col-sm-3">
           <input type="password" onChange={(e)=> {changePassword(e)}} className="form-control" id="inputPassword" placeholder="enter password" />
         </div>
       </div>
-      <button className="btn btn-primary mb-3"
+      <button className="btn btn-primary mb-3" id="containerl2"
           onClick={() => {
             checkLogin();
           }}
-        >
+          >
           Login
       </button>
     </div>
