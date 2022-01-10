@@ -10,7 +10,6 @@ import Home from "./components/Home"
 import AddDecoration from "./components/AddDecoration";
 import OneDecoration from "./components/OneDecoration";
 import UserReservation from "./components/UserReservation";
-
 import "bootstrap/dist/css/bootstrap.css";
 // import "bootstrap/dist/js/bootstrap.js";
 

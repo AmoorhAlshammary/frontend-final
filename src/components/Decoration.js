@@ -58,11 +58,13 @@ export default function Decoration({ token, user }) {
                     <h5 className="card-title">{element.name}</h5>
                     <p className="card-text">{element.description}</p>
                     <Link className="btn btn-primary" to={`/decoration/${element._id}`} >Open</Link>
+
                   </div>
                 </div>
               
             )
           })
+          
         }
 
       </div>

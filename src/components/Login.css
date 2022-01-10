@@ -1,20 +1,39 @@
-#containerlog{
-    color: brown;
+#containerlog{ 
+     color: brown;
     font-size: x-large;
-
-}
+    position: relative;
+    display: inline-block;
+    padding: 12px 16px; 
+    width: 30%;
+    padding: 12 px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    box-sizing: border-box;
+    margin: 10px 0 10px 0;
+  position: relative;
+  border: 1px ;
+  background-color: antiquewhite;
+} 
 #containerlo{
     color: darkslategrey;
     font-size: xx-large;
     font-style: oblique;
+    width: 20;
+    display: inline;
+    border: cadetblue;
 }
 #containerl{
     color: darkslategray;
     font-size: xx-large;
+    display: inline;
 }
-#containerl2{
-    font-weight: 200;
-}
-#containerl23{
-    color: lightblue;
-}
+ #containerl2{
+    background-color: grey;
+    color:black;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 20;
+    opacity: 0.8;
+} 
