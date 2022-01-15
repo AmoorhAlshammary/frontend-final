@@ -37,7 +37,7 @@ export default function SignUp() {
   // https://getbootstrap.com/docs/5.1/forms/form-control/
   return (
     <div className="container" id="containersign">
-      <h2>SIGNUP</h2>
+      <h2>SIGNUP ...</h2>
       <div className="mb-3 row" id="containersi">
         <label HTMLFor="name" className="col-sm-2 col-form-label">Name</label>
         <div className="col-sm-3">

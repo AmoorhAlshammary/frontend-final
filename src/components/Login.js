@@ -37,7 +37,7 @@ export default function Login({setToken, setUser}) {
   return (
    
     <div className="container" id="containerlog">
-      <h2>LOGIN</h2>
+      <h2>LOGIN ...</h2>
       <div className="mb-3 row" id="containerlo">
         <label HTMLFor="staticEmail" className="col-sm-2 col-form-label">Email</label>
         <div className="col-sm-3">
@@ -57,6 +57,7 @@ export default function Login({setToken, setUser}) {
           >
           Login
       </button>
+
     </div>
   );
 }

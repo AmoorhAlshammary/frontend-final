@@ -15,7 +15,7 @@ export default function Navbar({setUser, setToken, token, user}) {
       <div className="container-fluid">
         
   
-        <Link className="navbar-brand" to="/">Amirah D</Link>
+        <Link className="navbar-brand" to="/">Amirah Decoration</Link>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
@@ -27,7 +27,6 @@ export default function Navbar({setUser, setToken, token, user}) {
             { user.isAdmin === false ? <Link className="nav-link" to={`/reservation/user/view`} >Reservations</Link> : null}
             { user.isAdmin ? <Link className="nav-link" to='/decoration/add'>Add</Link> : null}
             { user.isAdmin ? <Link className="nav-link" to='/reservation'>Reservations</Link> : null}
-
             {token ? 
               <button className="btn btn-light" onClick={logout}>Logout</button>
               :

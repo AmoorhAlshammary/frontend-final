@@ -47,7 +47,6 @@ export default function Decoration({ token, user }) {
           <div class="row" >
           <input placeholder="Search" type="text" className=" col-sm-3 width=100px " onChange={(e)=> newsearch(e)} />
       <button className="searchInput w-50 border-0 px-4 py-2"onClick={()=>searchd()}>search</button>   
-
            
         {data.map((element, i) => {
             return (
@@ -69,6 +68,7 @@ export default function Decoration({ token, user }) {
 
       </div>
     </div>
+
     
   )
 }
