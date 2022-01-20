@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link, useHistory } from "react-router-dom";
 
-
 export default function Navbar({setUser, setToken, token, user}) {
   const history = useHistory();
   const logout = ()=>{
@@ -11,9 +10,10 @@ export default function Navbar({setUser, setToken, token, user}) {
   }
   // https://getbootstrap.com/docs/5.1/components/navbar/
   return (
+    // {console.log(user);}
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
-        
+      {console.log(user,"user")}
   
         <Link className="navbar-brand" to="/">Amirah Decoration</Link>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,6 +33,8 @@ export default function Navbar({setUser, setToken, token, user}) {
               <>
                 <Link className="nav-link" to="/signup">Signup</Link>
                 <Link className="nav-link" to="/login">Login</Link>
+
+ 
       
               </>
             }

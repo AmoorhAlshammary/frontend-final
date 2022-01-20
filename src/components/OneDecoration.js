@@ -23,7 +23,7 @@ function OneDecoration({token, user}) {
       const getOneDecoration = async ()=>{
           if(token){
             // console.log("kkkkkk");
-            const response = await axios.get(`http://localhost:5000/decoration/${id}`, { headers: { authorization: `Bearer ${token}` } });
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/${id}`, { headers: { authorization: `Bearer ${token}` } });
             // console.log(response.data);
             setDecorationId(response.data.oneDecoration._id);
             setName(response.data.oneDecoration.name);
@@ -46,7 +46,7 @@ function OneDecoration({token, user}) {
       // console.log(decorationId, user._id)
         try {
       
-          const response = await axios.post("http://localhost:5000/reservation", {
+          const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/reservation`, {
             decorationId: decorationId,
             userId: user._id,
             date: new Date()
@@ -63,7 +63,7 @@ function OneDecoration({token, user}) {
     const cancelReservation = async () => {
         try {
   
-          const response = await axios.delete(`http://localhost:5000/reservation/${reservation._id}`,
+          const response = await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/reservation/${reservation._id}`,
             { headers: { authorization: `Bearer ${token}` } }
           )
           // console.log(response)
@@ -77,7 +77,7 @@ function OneDecoration({token, user}) {
     // admin functions
     const updateDecoration = async ()=>{
       try {
-        const response = await axios.put('http://localhost:5000/decoration',{
+        const response = await axios.put(`${process.env.REACT_APP_BACKEND_URL}/decoration`,{
           id: decorationId,
           name,
           description,
@@ -96,7 +96,7 @@ function OneDecoration({token, user}) {
     }
     const deleteDecoration = async ()=>{
       try {
-        const response = await axios.delete(`http://localhost:5000/decoration/${decorationId}`,
+        const response = await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/decoration/${decorationId}`,
         {headers: {authorization: `Bearer ${token}`}}
         )
         if(response.status===201){

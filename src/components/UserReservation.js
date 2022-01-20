@@ -11,7 +11,7 @@ export default function UserReservation({ token, user }) {
       // console.log(token,"kkkkkk");
       if(token){
           try {
-              const response = await axios.get(`http://localhost:5000/reservation/${user._id}`, { headers: { authorization: `Bearer ${token}` } })
+              const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/reservation/${user._id}`, { headers: { authorization: `Bearer ${token}` } })
               setData(response.data);
             //   console.log(response.data);
           } catch (error) {

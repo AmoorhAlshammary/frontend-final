@@ -27,7 +27,7 @@ export default function SignUp() {
       password: password,
     });
     // eslint-disable-next-line
-    const response = await axios.post("http://localhost:5000/signUp", {
+    const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/signUp`, {
       name,
       email,
       password,

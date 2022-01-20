@@ -15,7 +15,7 @@ export default function Decoration({ token, user }) {
     const getData = async () => {
       // console.log(token,"kkkkkk");
       if(token){
-        const response = await axios.get("http://localhost:5000/decoration", { headers: { authorization: `Bearer ${token}` } })
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/decoration`, { headers: { authorization: `Bearer ${token}` } })
         setData(response.data);
         // console.log(respone.data);
       }else{
@@ -41,18 +41,18 @@ export default function Decoration({ token, user }) {
 
 
   return (
-    // https://getbootstrap.com/docs/5.1/layout/grid/
-    
+    <>
+   <input placeholder="Search" type="text" className=" col-sm-3 width=100px " onChange={(e)=> newsearch(e)} />
+      <button  className="searchInput w-60 border-0 px-4 py-2"onClick={()=>searchd()}>search</button>   
+          
     <div class="container">
-          <div class="row" >
-          <input placeholder="Search" type="text" className=" col-sm-3 width=100px " onChange={(e)=> newsearch(e)} />
-      <button className="searchInput w-50 border-0 px-4 py-2"onClick={()=>searchd()}>search</button>   
-           
+          <div class="row"  >
+            
         {data.map((element, i) => {
             return (
               // https://getbootstrap.com/docs/5.1/components/card/
                 <div key={element._id} className="card m-2" style={{width: 300}}>
-                  <img src={element.img} className="card-img-top" alt="" width="350" height="350"/>
+                  <img id="as"src={element.img} className="card-img-top" alt="" width="350" height="350"/>
                   <div className="card-body">
                     <h5 className="card-title">{element.name}</h5>
                     <p className="card-text">{element.description}</p>
@@ -69,7 +69,7 @@ export default function Decoration({ token, user }) {
       </div>
     </div>
 
-    
+    </>
   )
 }
 

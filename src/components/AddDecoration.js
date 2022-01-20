@@ -14,7 +14,7 @@ function AddDecoration({token}) {
     const history = useHistory(); 
 
     const postDecoration = async ()=>{
-        const response = await axios.post("http://localhost:5000/decoration", {
+        const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/decoration`, {
             name,
             description,
             price,
@@ -30,12 +30,14 @@ function AddDecoration({token}) {
     return (
           <div className='container row' id='containerAdd'>
             <h2>ADD DECORATION</h2>
+  
             <input type='text'  className='input my-3 ' placeholder='name' onChange={(e)=> setName(e.target.value)} />
             <input type='text' className='input my-3 ' placeholder='description' onChange={(e)=> setDescription(e.target.value)} />
             <input type='number' className='input my-3 ' placeholder='price' onChange={(e)=> setPrice(e.target.value)} />
             <input type='text' className='input my-3 ' placeholder='image url ' onChange={(e)=> setImg(e.target.value)} />
             <button className='input my-3 sm' onClick={()=> postDecoration()}>ADD</button>
             <UploadForm setImg={setImg}/>
+          
           
 
           </div>

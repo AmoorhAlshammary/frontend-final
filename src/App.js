@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-
 import Navbar from "./components/Navbar";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
@@ -14,9 +13,10 @@ import "bootstrap/dist/css/bootstrap.css";
 // import "bootstrap/dist/js/bootstrap.js";
 
 import "./App.css"
-
+require("dotenv").config();
 
 export default function App() {
+  console.log(process.env.REACT_APP_BACKEND_URL,"backend url");
   const [token, setToken] = useState("");
   const [user, setUser] = useState({});
 

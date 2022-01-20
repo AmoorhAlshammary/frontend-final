@@ -17,7 +17,7 @@ export default function Login({setToken, setUser}) {
 
   const checkLogin = async () => {
     try {
-      const response = await axios.post("http://localhost:5000/login", {
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/login`, {
         email,
         password,
       });
@@ -26,7 +26,8 @@ export default function Login({setToken, setUser}) {
        // جايه من الريكوست اللي راح لسيرفر
       //  localStorage.setItem("token",JSON.stringify(response.data.token))
        setToken(response.data.token);
-       setUser(response.data.user);
+      setUser(response.data.user);
+       console.log(response.data,"data")
        history.push("/decoration");
     }                        
     } catch (error) {
@@ -35,7 +36,6 @@ export default function Login({setToken, setUser}) {
   };
   // https://getbootstrap.com/docs/5.1/forms/form-control/
   return (
-   
     <div className="container" id="containerlog">
       <h2>LOGIN ...</h2>
       <div className="mb-3 row" id="containerlo">
